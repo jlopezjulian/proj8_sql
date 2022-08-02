@@ -1,0 +1,8 @@
+extends layout.pug
+
+block content
+
+    h2 #{err.status} (page not found)
+    h3=err
+    pre=err.stack
+    a.button(href="/books") HOME PAGE
