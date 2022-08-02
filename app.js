@@ -14,18 +14,17 @@
 
  var app = express();
 
- //IMPORT THE INSTANCE OF SEQUELIZE
+ //importing the instance of sequelize
  const sequelize = require("./models").sequelize;
 
- //USE sequelize.authenticate() TO CONNECT TO THE DATABASE
+ //use sequelize.authenticate() to the DB
  (async () => {
-   //USE sequelize.sync() TO SYNC MODEL WITH DATABASE
-   //await sequelize.sync({force:true}); **commented out - only to test connection
+   //sequelize.sync() to sync model with database
    try {
      await sequelize.authenticate();
      console.log("Connection to the database successful!");
    } catch (error) {
-     console.error("Error connecting to the database: ", error);
+     console.error("Error connecting to the database.", error);
    }
  })();
 
@@ -48,13 +47,16 @@
    next(createError(404));
  });
 
- // error handler
+/**
+ * set local providing error in development
+ * error handler that renders the error message
+ */
+
  app.use(function(err, req, res, next) {
    // set locals, only providing error in development
    res.locals.message = err.message;
    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-   // render the error page
    res.status(err.status || 500);
    res.render('error');
  });
